@@ -1,6 +1,5 @@
 using BlogPlatform.Domain.Enities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace BlogPlatform.Infrastructure.Persistence;
 

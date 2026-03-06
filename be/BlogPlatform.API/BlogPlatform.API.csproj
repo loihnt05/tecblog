@@ -8,13 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BlogPlatform.Application\BlogPlatform.Application.csproj" />
     <ProjectReference Include="..\BlogPlatform.Infrastructure\BlogPlatform.Infrastructure.csproj" />
-    <ProjectReference Include="..\BlogPlatform.Persistence\BlogPlatform.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
