@@ -12,11 +12,6 @@ public class BlogDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<Post>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Title).IsRequired().HasMaxLength(200);
-            entity.Property(e => e.Content).IsRequired();
-        });
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(BlogDbContext).Assembly);
     }
 }
