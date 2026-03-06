@@ -10,12 +10,12 @@ public class PostTagConfiguration : IEntityTypeConfiguration<PostTag>
     {
         builder.ToTable("PostTags");
         builder.HasKey(x => new { x.PostId, x.TagId });
-        builder.HasOne<Post>()
-            .WithMany()
+        builder.HasOne(pt => pt.Post)
+            .WithMany(p => p.Tags)
             .HasForeignKey(pt => pt.PostId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne<Tag>()
+        builder.HasOne(pt => pt.Tag)
             .WithMany(t => t.PostTags)
             .HasForeignKey(pt => pt.TagId)
             .OnDelete(DeleteBehavior.Cascade);

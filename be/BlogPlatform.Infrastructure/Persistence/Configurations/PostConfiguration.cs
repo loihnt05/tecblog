@@ -58,10 +58,5 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
             .HasForeignKey(c => c.PostId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // PostTags relationship
-        builder.HasMany(p => p.Tags)
-            .WithOne()
-            .HasForeignKey(pt => pt.PostId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }
