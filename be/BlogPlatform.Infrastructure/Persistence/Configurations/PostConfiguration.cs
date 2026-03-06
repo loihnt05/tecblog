@@ -9,9 +9,59 @@ public class PostConfiguration : IEntityTypeConfiguration<Post>
 {
     public void Configure(EntityTypeBuilder<Post> builder)
     {
-        builder.HasKey(x => x.Id);
-        builder.Property(x => x.Title).IsRequired().HasMaxLength(200);
-        builder.Property(x => x.Content).IsRequired();
-        
+        builder.ToTable("Posts");
+
+        // Primary Key
+        builder.HasKey(p => p.Id);
+
+        // Title
+        builder.Property(p => p.Title)
+            .IsRequired()
+            .HasMaxLength(200);
+
+        // Slug
+        builder.Property(p => p.Slug)
+            .IsRequired()
+            .HasMaxLength(200);
+
+        builder.HasIndex(p => p.Slug)
+            .IsUnique();
+
+        // Content
+        builder.Property(p => p.Content)
+            .IsRequired();
+
+        // Summary
+        builder.Property(p => p.Summary)
+            .HasMaxLength(500);
+
+        // Publish state
+        builder.Property(p => p.IsPublished)
+            .IsRequired();
+
+        // Dates
+        builder.Property(p => p.PublicationDate)
+            .IsRequired();
+
+        builder.Property(p => p.LastModifiedDate)
+            .IsRequired();
+
+        // Author relationship
+        builder.HasOne(p => p.Author)
+            .WithMany(u => u.Posts)
+            .HasForeignKey(p => p.AuthorId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Comments relationship
+        builder.HasMany(p => p.Comments)
+            .WithOne()
+            .HasForeignKey(c => c.PostId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // PostTags relationship
+        builder.HasMany(p => p.Tags)
+            .WithOne()
+            .HasForeignKey(pt => pt.PostId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
