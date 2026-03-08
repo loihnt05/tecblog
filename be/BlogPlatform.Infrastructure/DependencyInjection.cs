@@ -16,7 +16,8 @@ public static class DependencyInjection
         services.AddDbContext<BlogDbContext>(options =>
             options.UseNpgsql(connectionString)
         );
-        services.AddScoped<IPostRepository, PostRepository>();
+        
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

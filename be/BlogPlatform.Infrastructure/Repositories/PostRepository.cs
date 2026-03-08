@@ -3,6 +3,8 @@ using BlogPlatform.Domain.Enities;
 using BlogPlatform.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
+namespace BlogPlatform.Infrastructure.Repositories;
+
 public class PostRepository : IPostRepository
 {
     private readonly BlogDbContext _context;
@@ -22,26 +24,33 @@ public class PostRepository : IPostRepository
     public async Task AddAsync(Post post)
     {
         await _context.Posts.AddAsync(post);
-        await _context.SaveChangesAsync();
     }
 
-    public Task<Post?> GetByIdAsync(Guid id)
+    public async Task<Post?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Posts
+            .Include(p => p.Author)
+            .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    public Task<List<Post>> GetPublishedPostsAsync()
+    public async Task<List<Post>> GetPublishedPostsAsync()
     {
-        throw new NotImplementedException();
+        return await _context.Posts
+            .Include(p => p.Author)
+            .Where(p => p.IsPublished)
+            .OrderByDescending(p => p.PublicationDate)
+            .ToListAsync();
     }
 
     public Task UpdateAsync(Post post)
     {
-        throw new NotImplementedException();
+        _context.Posts.Update(post);
+        return Task.CompletedTask;
     }
 
     public Task DeleteAsync(Post post)
     {
-        throw new NotImplementedException();
+        _context.Posts.Remove(post);
+        return Task.CompletedTask;
     }
 }

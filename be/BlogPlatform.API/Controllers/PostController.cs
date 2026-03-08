@@ -1,22 +1,48 @@
 using BlogPlatform.Application.Posts.Commands.CreatePost;
+using BlogPlatform.Application.Posts.Queries.GetPostById;
+using BlogPlatform.Application.Posts.Queries.GetPostBySlug;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BlogPlatform.API.Controllers;
+
 [ApiController]
 [Route("api/posts")]
 public class PostController : ControllerBase
 {
-    private readonly CreatePostHandler _createHandler;
+    private readonly IMediator _mediator;
 
-    public PostController(CreatePostHandler createHandler)
+    public PostController(IMediator mediator)
     {
-        _createHandler = createHandler;
+        _mediator = mediator;
     }
 
     [HttpPost]
     public async Task<IActionResult> Create(CreatePostCommand command)
     {
-        var id = await _createHandler.Handle(command);
-        return Ok(id);
+        var id = await _mediator.Send(command);
+        return CreatedAtAction(nameof(GetById), new { id }, id);
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var post = await _mediator.Send(new GetPostByIdQuery(id));
+        
+        if (post == null)
+            return NotFound();
+            
+        return Ok(post);
+    }
+
+    [HttpGet("slug/{slug}")]
+    public async Task<IActionResult> GetBySlug(string slug)
+    {
+        var post = await _mediator.Send(new GetPostBySlugQuery(slug));
+        
+        if (post == null)
+            return NotFound();
+            
+        return Ok(post);
     }
 }

@@ -1,20 +1,21 @@
 using BlogPlatform.Application.Interfaces;
 using BlogPlatform.Application.Posts.DTOs;
+using MediatR;
 
 namespace BlogPlatform.Application.Posts.Queries.GetPostBySlug;
 
-public class GetPostBySlugHandler
+public class GetPostBySlugHandler : IRequestHandler<GetPostBySlugQuery, PostDto?>
 {
-    private readonly IPostRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public GetPostBySlugHandler(IPostRepository repository)
+    public GetPostBySlugHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
-    public async Task<PostDto?> Handle(GetPostBySlugQuery query)
+    public async Task<PostDto?> Handle(GetPostBySlugQuery query, CancellationToken cancellationToken)
     {
-        var post = await _repository.GetBySlugAsync(query.Slug);
+        var post = await _unitOfWork.Posts.GetBySlugAsync(query.Slug);
 
         if (post == null)
             return null;

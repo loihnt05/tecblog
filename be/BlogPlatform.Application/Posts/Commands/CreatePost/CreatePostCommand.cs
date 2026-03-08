@@ -1,3 +1,5 @@
+using MediatR;
+
 namespace BlogPlatform.Application.Posts.Commands.CreatePost;
 
 public record CreatePostCommand(
@@ -5,4 +7,4 @@ public record CreatePostCommand(
     string Content,
     string? Summary,
     Guid AuthorId
-);
+) : IRequest<Guid>;

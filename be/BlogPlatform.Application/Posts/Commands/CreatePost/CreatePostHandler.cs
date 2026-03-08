@@ -1,18 +1,19 @@
 using BlogPlatform.Application.Interfaces;
 using BlogPlatform.Domain.Enities;
+using MediatR;
 
 namespace BlogPlatform.Application.Posts.Commands.CreatePost;
 
-public class CreatePostHandler
+public class CreatePostHandler : IRequestHandler<CreatePostCommand, Guid>
 {
-    private readonly IPostRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreatePostHandler(IPostRepository repository)
+    public CreatePostHandler(IUnitOfWork unitOfWork)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
     }
 
-    public async Task<Guid> Handle(CreatePostCommand command)
+    public async Task<Guid> Handle(CreatePostCommand command, CancellationToken cancellationToken)
     {
         var slug = command.Title
             .ToLower()
@@ -31,7 +32,8 @@ public class CreatePostHandler
             LastModifiedDate = DateTime.UtcNow
         };
 
-        await _repository.AddAsync(post);
+        await _unitOfWork.Posts.AddAsync(post);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return post.Id;
     }
