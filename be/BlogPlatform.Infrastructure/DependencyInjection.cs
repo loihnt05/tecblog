@@ -1,3 +1,4 @@
+using BlogPlatform.Application.Interfaces;
 using BlogPlatform.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -8,14 +9,16 @@ namespace BlogPlatform.Infrastructure;
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(
-        this IServiceCollection services, 
+        this IServiceCollection services,
         IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
-        services.AddDbContext<BlogDbContext>(options => 
+        services.AddDbContext<BlogDbContext>(options =>
             options.UseNpgsql(connectionString)
         );
+        services.AddScoped<IPostRepository, PostRepository>();
+
         return services;
     }
-    
+
 }
