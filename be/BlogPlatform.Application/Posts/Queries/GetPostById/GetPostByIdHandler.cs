@@ -2,7 +2,7 @@ using BlogPlatform.Application.Interfaces;
 using BlogPlatform.Application.Posts.DTOs;
 using MediatR;
 
-namespace BlogPlatform.Application.Posts.Queries.GetPostById;
+namespace BlogPlatform.Application.Posts.Queries.GetPostById; 
 
 public class GetPostByIdHandler : IRequestHandler<GetPostByIdQuery, PostDto?>
 {
