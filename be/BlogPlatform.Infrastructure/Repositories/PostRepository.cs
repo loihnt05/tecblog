@@ -55,6 +55,9 @@ public class PostRepository : IPostRepository
     }
     public async Task<List<Post>> GetPostsAsync()
     {
-        return await _context.Posts.ToListAsync();
+        return await _context.Posts
+            .Include(p => p.Author)
+            .OrderByDescending(p => p.PublicationDate)
+            .ToListAsync();
     }
 }

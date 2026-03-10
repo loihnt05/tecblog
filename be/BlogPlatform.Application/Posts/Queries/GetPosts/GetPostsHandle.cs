@@ -15,7 +15,7 @@ public class GetPostsHandler : IRequestHandler<GetPostsQuery, List<PostDto>>
 
     public async Task<List<PostDto>> Handle(GetPostsQuery request, CancellationToken cancellationToken)
     {
-        var posts = await _unitOfWork.Posts.GetPublishedPostsAsync();
+        var posts = await _unitOfWork.Posts.GetPostsAsync();
         
         return posts.Select(p => new PostDto
         {
