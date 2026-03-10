@@ -32,5 +32,17 @@ public class BlogDbContext : DbContext
                 CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
             }
         );
+        modelBuilder.Entity<Post>().HasData(
+            new Post
+            {
+                Id = Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                Title = "Test Post",
+                Slug = "test-post",
+                Content = "This is a test post for development.",
+                PublicationDate = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                IsPublished = true,
+                AuthorId = Guid.Parse("11111111-1111-1111-1111-111111111111")
+            }
+        );
     }
 }

@@ -1,6 +1,70 @@
-@BlogPlatform.API_HostAddress = http://localhost:5105
+@BlogPlatform_API_HostAddress = http://localhost:5105
 
-GET {{BlogPlatform.API_HostAddress}}/weatherforecast/
+### Variables (Replace with actual IDs from your responses)
+@authorId = 11111111-1111-1111-1111-111111111111
+@postId = 00000000-0000-0000-0000-000000000000
+
+#################################
+### AUTHOR ENDPOINTS
+#################################
+
+### Create Author
+POST {{BlogPlatform_API_HostAddress}}/api/authors
+Content-Type: application/json
+
+{
+  "username": "johndoe",
+  "email": "john.doe@example.com",
+  "password": "SecurePassword123!",
+  "bio": "Software developer and tech blogger",
+  "avatarUrl": "https://example.com/avatar.jpg"
+}
+
+###
+
+### Get All Authors
+GET {{BlogPlatform_API_HostAddress}}/api/authors/all
+Accept: application/json
+
+###
+
+### Get Author By ID
+GET {{BlogPlatform_API_HostAddress}}/api/authors/{{authorId}}
+Accept: application/json
+
+###
+
+#################################
+### POST ENDPOINTS
+#################################
+
+### Create Post
+POST {{BlogPlatform_API_HostAddress}}/api/posts
+Content-Type: application/json
+
+{
+  "title": "Getting Started with ASP.NET Core",
+  "content": "This is a comprehensive guide to building modern web applications with ASP.NET Core. We'll cover everything from setting up your development environment to deploying your application to production.",
+  "summary": "A comprehensive guide to building modern web applications with ASP.NET Core",
+  "authorId": "{{authorId}}"
+}
+
+###
+
+### Get All Posts
+GET {{BlogPlatform_API_HostAddress}}/api/posts/all
+Accept: application/json
+
+###
+
+### Get Post By ID
+GET {{BlogPlatform_API_HostAddress}}/api/posts/{{postId}}
+Accept: application/json
+
+###
+
+### Get Post By Slug
+GET {{BlogPlatform_API_HostAddress}}/api/posts/slug/getting-started-with-asp-net-core
 Accept: application/json
 
 ###
