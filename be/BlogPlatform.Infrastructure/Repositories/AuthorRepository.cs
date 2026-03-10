@@ -47,4 +47,8 @@ public class AuthorRepository : IAuthorRepository
             _context.Authors.Remove(author);
         }
     }
+    public async Task<List<User>> GetAllAsync()
+    {
+        return await _context.Authors.ToListAsync();
+    }
 }

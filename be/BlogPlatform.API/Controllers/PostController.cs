@@ -45,4 +45,10 @@ public class PostController : ControllerBase
             
         return Ok(post);
     }
+    [HttpGet("posts")]
+    public async Task<IActionResult> GetAll()
+    {
+        // Implementation for getting all posts
+        return Ok(); // Placeholder response
+    }
 }

@@ -2,7 +2,6 @@ using BlogPlatform.Application.Authors.Commands.CreateAuthor;
 using BlogPlatform.Application.Authors.Queries.GetAuthorById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace BlogPlatform.API.Controllers;
 
@@ -31,5 +30,10 @@ public class AuthorController : ControllerBase
             
         return Ok(author);
     }
-    
+    [HttpGet("authors")]
+    public async Task<IActionResult> GetAll()
+    {
+        // Implementation for getting all authors
+        return Ok(); // Placeholder response
+    }
 }

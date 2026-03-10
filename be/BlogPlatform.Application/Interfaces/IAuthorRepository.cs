@@ -10,4 +10,5 @@ public interface IAuthorRepository
     Task AddAsync(User author);
     Task UpdateAsync(User author);
     Task DeleteAsync(Guid id);
+    Task<List<User>> GetAllAsync();
 }
