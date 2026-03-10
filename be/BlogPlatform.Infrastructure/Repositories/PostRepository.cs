@@ -53,4 +53,8 @@ public class PostRepository : IPostRepository
         _context.Posts.Remove(post);
         return Task.CompletedTask;
     }
+    public async Task<List<Post>> GetPostsAsync()
+    {
+        return await _context.Posts.ToListAsync();
+    }
 }

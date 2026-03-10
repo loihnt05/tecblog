@@ -1,6 +1,7 @@
 using BlogPlatform.Application.Posts.Commands.CreatePost;
 using BlogPlatform.Application.Posts.Queries.GetPostById;
 using BlogPlatform.Application.Posts.Queries.GetPostBySlug;
+using BlogPlatform.Application.Posts.Queries.GetPosts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,10 +46,10 @@ public class PostController : ControllerBase
             
         return Ok(post);
     }
-    [HttpGet("posts")]
+    [HttpGet("all")]
     public async Task<IActionResult> GetAll()
     {
-        // Implementation for getting all posts
-        return Ok(); // Placeholder response
+        var posts = await _mediator.Send(new GetPostsQuery());
+        return Ok(posts);
     }
 }

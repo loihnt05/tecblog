@@ -10,4 +10,5 @@ public interface IPostRepository
     Task AddAsync(Post post);
     Task UpdateAsync(Post post);
     Task DeleteAsync(Post post);
+    Task<List<Post>> GetPostsAsync();
 }

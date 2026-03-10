@@ -1,5 +1,6 @@
 using BlogPlatform.Application.Authors.Commands.CreateAuthor;
 using BlogPlatform.Application.Authors.Queries.GetAuthorById;
+using BlogPlatform.Application.Authors.Queries.GetAuthors;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,10 +31,10 @@ public class AuthorController : ControllerBase
             
         return Ok(author);
     }
-    [HttpGet("authors")]
+    [HttpGet("all")]
     public async Task<IActionResult> GetAll()
     {
-        // Implementation for getting all authors
-        return Ok(); // Placeholder response
+        var authors = await _mediator.Send(new GetAuthorsQuery());
+        return Ok(authors);
     }
 }
